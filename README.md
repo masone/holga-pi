@@ -17,3 +17,7 @@ https://www.npmjs.com/package/pi-gpio
 
 http://raspberrypihobbyist.blogspot.ch/2014/11/debouncing-gpio-input.html
 layout https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
+
+
+
+`sudo raspi-config`
