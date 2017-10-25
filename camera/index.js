@@ -17,7 +17,7 @@ const trigger = _.debounce(() => {
 
 console.log('listening...');
 button.watch(function (err, value) {
-  if (err) console.log(err);
+  if (err) return console.log('Error watching button', err);
   trigger();
 });
 
@@ -28,7 +28,7 @@ const snap = () => {
   camera.set('output', output);
   camera.start();
   camera.on('read', (err) => {
-    if (err) console.log('Error', err);
+    if (err) return console.log('Error reading from camera', err);
     console.log('snapped', output);
     camera.stop();
     upload(output);
