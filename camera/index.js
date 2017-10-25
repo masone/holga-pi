@@ -6,9 +6,10 @@ const _ = require('lodash');
 const output = path.resolve('./tmp/holgapi%d.jpg');
 const camera = new RaspiCam({mode: 'photo', output});
 
-button = new Gpio(4, 'in', 'rising', {activeLow: true}); //, {activeLow: false});
+button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
   console.log('throttled')
+  snap();
 }, 1000);
 
 console.log('listening...');
@@ -22,6 +23,6 @@ const snap = () => {
   camera.on('read', (err, timestamp, filename) => {
     if (err) console.log('Error', err);
     console.log('snapped', filename);
-    RaspiCam.stop();
+    camera.stop();
   });
 };
