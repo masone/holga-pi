@@ -3,7 +3,7 @@ const gpio = require('pi-gpio');
 const path = require('path');
 
 const output = path.resolve('./tmp/holgapi%d.jpg');
-const camera = new RaspiCam({mode: 'photo', output, width});
+const camera = new RaspiCam({mode: 'photo', output});
 const pin = 7;
 
 gpio.open(pin, 'input pulldown', function(err) {
