@@ -1,0 +1,22 @@
+{
+  "name": "holga-pi",
+  "version": "1.0.0",
+  "description": "https://davidwalsh.name/cloudinary-filters https://cloudinary.com/documentation/image_transformations?utm_source=DWB&utm_medium=Sponsored_post_11&utm_content=Artistic-Filters#artistic_filter_effects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masone/holga-pi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masone/holga-pi/issues"
+  },
+  "homepage": "https://github.com/masone/holga-pi#readme",
+  "dependencies": {
+    "raspicam": "^0.2.14"
+  }
+}
