@@ -1,17 +1,20 @@
 const RaspiCam = require('raspicam');
 const Gpio = require('onoff').Gpio;
 const path = require('path');
+const _ = require('lodash');
 
 const output = path.resolve('./tmp/holgapi%d.jpg');
 const camera = new RaspiCam({mode: 'photo', output});
-const pin = 7;
 
+button = new Gpio(4, 'in', 'rising', {activeLow: true}) //, {activeLow: false});
+const trigger = _.debounce(() => {
+  console.log('throttled')
+}, 1000);
 
-button = new Gpio(7, 'in');
-
+console.log('listening...')
 button.watch(function(err, value) {
-  if(err) throw err;
-  console.log('read value', value)
+  if (err) console.log(err);
+  trigger();
 });
 
 // gpio.open(pin, 'input pulldown', function(err) {
