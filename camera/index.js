@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 const output = path.resolve(`./tmp/holga.jpg`);
 const camera = new RaspiCam({
-  rotation: 270, contrast: 30, saturation: 30,
+  rotation: 270, contrast: 0, saturation: 0,
   mode: 'photo', width: 2592, height: 1944, quality: 100, encoding: 'jpg', output
 });
 
