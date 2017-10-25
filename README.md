@@ -21,3 +21,5 @@ layout https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
 
 
 `sudo raspi-config`
+
+`export CLOUDINARY_URL=cloudinary://... node index.js`
