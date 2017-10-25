@@ -1,22 +1,30 @@
 const RaspiCam = require('raspicam');
-const gpio = require('pi-gpio');
+const Gpio = require('onoff').Gpio;
 const path = require('path');
 
 const output = path.resolve('./tmp/holgapi%d.jpg');
 const camera = new RaspiCam({mode: 'photo', output});
 const pin = 7;
 
-gpio.open(pin, 'input pulldown', function(err) {
-  if(err) throw err;
-  console.log('gpio ready');
 
-  setInterval(() => {
-    gpio.read(pin, function(err, value) {
-      if(err) console.log("gpio error", err);
-      console.log('read value', value)
-    });
-  }, 0);
+button = new Gpio(7, 'in');
+
+button.watch(function(err, value) {
+  if(err) throw err;
+  console.log('read value', value)
 });
+
+// gpio.open(pin, 'input pulldown', function(err) {
+//   if(err) throw err;
+//   console.log('gpio ready');
+//
+//   setInterval(() => {
+//     gpio.read(pin, function(err, value) {
+//       if(err) console.log("gpio error", err);
+//       console.log('read value', value)
+//     });
+//   }, 0);
+// });
 
 
 // camera.start();
