@@ -3,7 +3,7 @@ const app = express()
 const cloudinary = require('cloudinary')
 
 app.get('/', function (req, res) {
-  cloudinary.v2.api.resources({resource_type: 'image', max_results: 36}, (err, result) => {
+  cloudinary.v2.api.resources({resource_type: 'image', max_results: 1, direction: 'desc'}, (err, result) => {
     if(err) return console.log(err)
     console.log(result.resources)
     const urls = result.resources.map((resource) => generateUrl(resource))
