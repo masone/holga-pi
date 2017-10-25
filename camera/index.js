@@ -5,34 +5,34 @@ const cloudinary = require('cloudinary');
 const _ = require('lodash');
 
 const output = path.resolve(`./tmp/holga.jpg`);
-const camera = new RaspiCam({
-  rotation: 270, contrast: 0, saturation: 0,
-  mode: 'photo', width: 2592, height: 1944, quality: 100, encoding: 'jpg', output
-});
 
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
+  console.log('triggering...')
   snap();
-}, 1000);
+}, 1500, {leading: true, trailing: false});
 
 console.log('listening...');
 button.watch(function (err, value) {
-  if (err) console.log(err);
+  if (err) return console.log(err);
   trigger();
 });
 
 const snap = () => {
-  console.log('snapping...');
   const timestamp = Math.floor(new Date() / 1000);
   const output = path.resolve(`./tmp/holga-${timestamp}.jpg`);
-  camera.set('output', output);
-  camera.start();
+  const camera = new RaspiCam({
+	  rotation: 270, contrast: 0, saturation: 0,
+	  nopreview: true, vstab: false,  
+	  mode: 'photo', width: 1296, height: 972, quality: 80, encoding: 'jpg', output
+  });
+  console.log('snapping...');
   camera.on('read', (err) => {
-    if (err) console.log('Error', err);
+    if (err) return console.log('Error', err);
     console.log('snapped', output);
-    camera.stop();
     upload(output);
   });
+  camera.start();
 };
 
 const upload = (file) => {
