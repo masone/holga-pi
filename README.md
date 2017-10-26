@@ -1,25 +1,13 @@
 # holga-pi
 
-https://davidwalsh.name/cloudinary-filters
-https://cloudinary.com/documentation/image_transformations?utm_source=DWB&utm_medium=Sponsored_post_11&utm_content=Artistic-Filters#artistic_filter_effects
+- Gpio layout https://pinout.xyz
+- Library for the switch https://www.npmjs.com/package/onoff
+- Library for the camera https://github.com/troyth/node-raspicam
+- Image upload / storage https://cloudinary.com/documentation/image_upload_api_reference
+- Image api https://cloudinary.com/documentation/admin_api#browse_resources
+- Image filters https://cloudinary.com/documentation/image_transformations
 
-```
-Cloudinary::Uploader.upload("sample.jpg", :crop => "limit", :tags => "samples", :width => 3000, :height => 2000)
-cl_image_tag("sample", :crop => "fill", :gravity => "faces", :width => 300, :height => 200, :format => "jpg")
-```
-
-https://cloudinary.com/documentation/admin_api#browse_resources
-
-
-http://thisdavej.com/beginners-guide-to-installing-node-js-on-a-raspberry-pi/#install-node
-https://www.npmjs.com/package/onoff
-https://www.npmjs.com/package/pi-gpio
-
-http://raspberrypihobbyist.blogspot.ch/2014/11/debouncing-gpio-input.html
-layout https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
-
-
-
-`sudo raspi-config`
-
-`export CLOUDINARY_URL=cloudinary://... node index.js`
+# How to
+- Install latest node version on pi http://thisdavej.com/beginners-guide-to-installing-node-js-on-a-raspberry-pi/#install-node 
+- Enable the camera `sudo raspi-config`
+- Start camera daemon on server `export CLOUDINARY_URL=cloudinary://... node index.js`
