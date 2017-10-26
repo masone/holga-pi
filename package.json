@@ -1,0 +1,31 @@
+{
+  "name": "holga-pi",
+  "version": "1.0.0",
+  "description": "- Gpio layout https://pinout.xyz - Library for the switch https://www.npmjs.com/package/onoff - Library for the camera https://github.com/troyth/node-raspicam - Image upload / storage https://cloudinary.com/documentation/image_upload_api_reference - Image api https://cloudinary.com/documentation/admin_api#browse_resources - Image filters https://cloudinary.com/documentation/image_transformations",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^4.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "scripts": {
+    "lint": "eslint **/*.js --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masone/holga-pi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masone/holga-pi/issues"
+  },
+  "homepage": "https://github.com/masone/holga-pi#readme"
+}
