@@ -4,15 +4,14 @@ const path = require('path');
 const cloudinary = require('cloudinary');
 const _ = require('lodash');
 
+//raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0
+
 const output = path.resolve('./tmp/holga.jpg');
 const camera = new RaspiCam({
   rotation: 270, contrast: 0, saturation: 0,
-  nopreview: true, vstab: false,
-	timeout: 0, //framerate: 1,
-  mode: 'timelapse', output,
-	timelapse: 1
-	//pi@raspberrypi:~/holga-pi/camera $ raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0
-	////width: 1296, height: 972, quality: 80, encoding: 'jpg', output
+  nopreview: true, vstab: false, timeout: 0, 
+  mode: 'timelapse', output, timelapse: 0.5,
+  // width: 1296, height: 972, quality: 80, encoding: 'jpg'
 });
 
   camera.on('read', (err, timestamp, filename) => {
@@ -21,17 +20,15 @@ const camera = new RaspiCam({
   });
 
   camera.on('stop', () => {
-    console.log('stooop')	    
+    console.log('camera stopped')	    
   });
 
   camera.on('exit', () => {
-	      console.log('exiit')
+	      console.log('camera exited')
 	    });
 
 
-//setInterval(() => { 
-	camera.start();
-//}, 1000)
+camera.start();
 
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
