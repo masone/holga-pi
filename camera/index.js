@@ -1,8 +1,8 @@
-const RaspiCam = require('raspicam');
-const Gpio = require('onoff').Gpio;
-const path = require('path');
-const cloudinary = require('cloudinary');
-const _ = require('lodash');
+const RaspiCam = require('raspicam')
+const Gpio = require('onoff').Gpio
+const path = require('path')
+const cloudinary = require('cloudinary')
+const _ = require('lodash')
 
 //raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0
 
@@ -36,7 +36,7 @@ const trigger = _.debounce(() => {
   upload();
 }, 1500, {leading: true, trailing: false});
 
-console.log('listening...');
+console.log('listening...')
 button.watch(function (err, value) {
   if (err) return console.log(err);
   trigger();
