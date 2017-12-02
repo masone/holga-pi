@@ -61,25 +61,25 @@ const camera = new RaspiCam({
   // width: 1296, height: 972, quality: 80, encoding: 'jpg'
 });
 
-  camera.on('start', () => {
-	  ledReady()
-  })
-  camera.on('read', (err, timestamp, filename) => {
-	      if (err){
-		      ledError()
-		      return console.log('Error', err);
-	      }
-	      console.log('snapped', timestamp, filename);
-  });
+camera.on('start', () => {
+  ledReady()
+})
+camera.on('read', (err, timestamp, filename) => {
+  if (err) {
+    ledError()
+    return console.log('Error', err);
+  }
+  console.log('snapped', timestamp, filename);
+});
 
-  camera.on('stop', () => {
-    console.log('camera stopped')
-  });
+camera.on('stop', () => {
+  console.log('camera stopped')
+});
 
-  camera.on('exit', () => {
-	  ledError()
-	      console.log('camera exited')
-	    });
+camera.on('exit', () => {
+  ledError()
+  console.log('camera exited')
+});
 
 
 camera.start();
@@ -105,7 +105,7 @@ const upload = () => {
   const working = ledWorking()
   cloudinary.uploader.upload(output, function (result) {
     console.log(result);
-    if(result.error){
+    if (result.error) {
       ledStopWorking(working)
       return ledFailure()
     }
