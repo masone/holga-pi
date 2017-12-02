@@ -4,77 +4,83 @@ const path = require('path')
 const cloudinary = require('cloudinary')
 const _ = require('lodash')
 
-const output = path.resolve(`./tmp/holga.jpg`)
+//raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0
+
+const output = path.resolve('./tmp/holga.jpg');
 const camera = new RaspiCam({
-  rotation: 270,
-  contrast: 30,
-  saturation: 30,
-  mode: 'photo',
-  width: 2592,
-  height: 1944,
-  quality: 100,
-  encoding: 'jpg',
-  output
-})
+  rotation: 270, contrast: 0, saturation: 0,
+  nopreview: true, vstab: false, timeout: 0,
+  mode: 'timelapse', output, timelapse: 0.5,
+  // width: 1296, height: 972, quality: 80, encoding: 'jpg'
+});
 
-const button = new Gpio(4, 'in', 'rising', {activeLow: true})
+  camera.on('read', (err, timestamp, filename) => {
+	      if (err) return console.log('Error', err);
+	      console.log('snapped', timestamp, filename);
+  });
+
+  camera.on('stop', () => {
+    console.log('camera stopped')
+  });
+
+  camera.on('exit', () => {
+	      console.log('camera exited')
+	    });
+
+
+camera.start();
+
+const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
-  snap()
-}, 1000)
+  // solid green
+  console.log('triggering...')
+  ledSuccess()
+  upload();
+}, 1500, {leading: true, trailing: false});
 
-const ledGreen = new Gpio(15, 'out')
-ledOn(ledGreen)
-
-// internet connection check
+const led = new Gpio(15, 'out')
+ledOk()
 
 console.log('listening...')
 button.watch(function (err, value) {
-  if (err) return console.log('Error watching button', err)
-  // ledFlash(ledRed)
-  trigger()
-})
+  if (err) {
+    ledBlockingError()
+    return console.log(err);
+  }
+  trigger();
+});
 
-const snap = () => {
-  // ledFlash(ledYellow)
-  console.log('snapping...')
-  const timestamp = Math.floor(new Date() / 1000)
-  const output = path.resolve(`./tmp/holga-${timestamp}.jpg`)
-  camera.set('output', output)
-  camera.start()
-  camera.on('read', (err) => {
-    if (err) return console.log('Error reading from camera', err)
-    // ledFlash(ledRed)
-    console.log('snapped', output)
-    camera.stop()
-    upload(output)
-  })
-}
+const upload = () => {
+  console.log('uploading...');
+  ledWorking()
+  cloudinary.uploader.upload(output, function (result) {
+    console.log(result);
+    if(result.error){
+      return ledFailure()
+    }
+    ledSuccess()
+    console.log('uploaded');
+  });
+};
 
-const upload = (file) => {
-  // ledBlink(ledYellow)
-  console.log('uploading...')
-  cloudinary.uploader.upload(file, function (result) {
-    if(result.error){ //
-      // ledFlash(ledRed)
-      }
-    console.log(result)
-    console.log('uploaded', file)
-  })
-  // ledFlash(ledRed)
-}
-
-const ledBlink = (led) => {
-
-}
-
-const ledOnce = (led) => {
-
-}
-
-const ledOn = (led) => {
+// ready/ok: solid
+// ok (trigger): off short once
+// working (uploading): rapid blink
+// blocking error: slow blink
+// upload failed: off long twice
+const ledReady = () => {
   led.writeSync(1)
 }
+const ledSuccess = () => {
 
-const ledOff = (led) => {
+}
+const ledFailure = () => {
 
+}
+const ledWorking = () => {
+
+}
+
+const ledBlockingError = () => {
+  // led.writeSync(1)
 }
