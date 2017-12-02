@@ -14,8 +14,14 @@ const camera = new RaspiCam({
   // width: 1296, height: 972, quality: 80, encoding: 'jpg'
 });
 
+  camera.on('start', () => {
+	  ledReady()
+  })
   camera.on('read', (err, timestamp, filename) => {
-	      if (err) return console.log('Error', err);
+	      if (err){
+		      ledError()
+		      return console.log('Error', err);
+	      }
 	      console.log('snapped', timestamp, filename);
   });
 
@@ -24,6 +30,7 @@ const camera = new RaspiCam({
   });
 
   camera.on('exit', () => {
+	  ledError()
 	      console.log('camera exited')
 	    });
 
@@ -32,14 +39,12 @@ camera.start();
 
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
-  // solid green
   console.log('triggering...')
   ledSuccess()
   upload();
 }, 1500, {leading: true, trailing: false});
 
 const led = new Gpio(15, 'out')
-ledOk()
 
 console.log('listening...')
 button.watch(function (err, value) {
