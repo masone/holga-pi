@@ -52,13 +52,15 @@ button.watch(function (err, value) {
 
 const upload = () => {
   console.log('uploading...');
-  ledWorking()
+  const working = ledWorking()
   cloudinary.uploader.upload(output, function (result) {
     console.log(result);
     if(result.error){
+      ledStopWorking(working)
       return ledFailure()
     }
-    ledSuccess()
+    ledStopWorking(working)
+    ledReady()
     console.log('uploaded');
   });
 };
@@ -69,18 +71,41 @@ const upload = () => {
 // blocking error: slow blink
 // upload failed: off long twice
 const ledReady = () => {
-  led.writeSync(1)
-}
-const ledSuccess = () => {
-
+  ledOn()
 }
 const ledFailure = () => {
-
+  const intervals = ledError()
+  setTimeout(() => {
+    intervals.forEach(interval => clearInterval(interval))
+  }, 1200)
 }
 const ledWorking = () => {
-
+  return setInterval(() => {
+    ledOff()
+    setInterval(() => {
+      ledOn()
+    }, 100)
+  }, 100)
+}
+const ledStopWorking = (working) => {
+  clearInterval(working)
+}
+const ledError = () => {
+  let intOff, intOn
+  intOff = setInterval(() => {
+    ledOff()
+    intOn = setInterval(() => {
+      ledOn()
+    }, 500)
+  }, 500)
+  return [intOff, intOn]
 }
 
-const ledBlockingError = () => {
-  // led.writeSync(1)
+const ledOn = () => {
+  console.log('led on')
+  led.writeSync(1)
+}
+const ledOff = () => {
+  console.log('led off')
+  led.writeSync(0)
 }
