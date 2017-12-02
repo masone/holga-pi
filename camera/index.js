@@ -22,13 +22,20 @@ const trigger = _.debounce(() => {
   snap()
 }, 1000)
 
+const ledGreen = new Gpio(15, 'out')
+ledOn(ledGreen)
+
+// internet connection check
+
 console.log('listening...')
 button.watch(function (err, value) {
   if (err) return console.log('Error watching button', err)
+  // ledFlash(ledRed)
   trigger()
 })
 
 const snap = () => {
+  // ledFlash(ledYellow)
   console.log('snapping...')
   const timestamp = Math.floor(new Date() / 1000)
   const output = path.resolve(`./tmp/holga-${timestamp}.jpg`)
@@ -36,6 +43,7 @@ const snap = () => {
   camera.start()
   camera.on('read', (err) => {
     if (err) return console.log('Error reading from camera', err)
+    // ledFlash(ledRed)
     console.log('snapped', output)
     camera.stop()
     upload(output)
@@ -43,9 +51,30 @@ const snap = () => {
 }
 
 const upload = (file) => {
+  // ledBlink(ledYellow)
   console.log('uploading...')
   cloudinary.uploader.upload(file, function (result) {
+    if(result.error){ //
+      // ledFlash(ledRed)
+      }
     console.log(result)
     console.log('uploaded', file)
   })
+  // ledFlash(ledRed)
+}
+
+const ledBlink = (led) => {
+
+}
+
+const ledOnce = (led) => {
+
+}
+
+const ledOn = (led) => {
+  led.writeSync(1)
+}
+
+const ledOff = (led) => {
+
 }
