@@ -32,13 +32,16 @@ const ledStopWorking = (working) => {
   clearInterval(working)
 }
 const ledError = () => {
-  let intOff, intOn
-  intOff = setInterval(() => {
+  const delay = 500
+  const intOff = setInterval(() => {
     ledOff()
-    intOn = setInterval(() => {
+  }, delay)
+  const intOn = setInterval(() => {
+    setTimeout(() => {
       ledOn()
-    }, 500)
-  }, 500)
+    }, delay)
+  }, delay)
+
   return [intOff, intOn]
 }
 
