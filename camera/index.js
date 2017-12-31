@@ -1,10 +1,12 @@
+const path = require('path')
 const Gpio = require('onoff').Gpio
 const cloudinary = require('cloudinary')
 const _ = require('lodash')
 
 const led = require('./lib/led')
+const output = path.resolve('./tmp/holga.jpg');
 
-camera.start()
+camera.start(output)
 
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
