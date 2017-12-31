@@ -7,7 +7,7 @@ ssh pi@holgapi.local
 
 ## Resources
 - Install latest node version on pi http://thisdavej.com/beginners-guide-to-installing-node-js-on-a-raspberry-pi/#install-node
-- Gpio layout https://pinout.xyz
+- Gpio layout (onoff uses BCM pin numbers) https://pinout.xyz
 - Library for the switch https://www.npmjs.com/package/onoff
 - Library for the camera https://github.com/troyth/node-raspicam
 - Image upload / storage https://cloudinary.com/documentation/image_upload_api_reference
@@ -28,4 +28,4 @@ ssh pi@holgapi.local
 
 ## TODO
 
-- On exit, disable led
+- try onoff debounce https://github.com/fivdi/onoff/blob/abb73e57dcf348899b299f0daec861cac5afad43/onoff.js#L51
