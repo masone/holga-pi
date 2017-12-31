@@ -1,6 +1,6 @@
 const RaspiCam = require('raspicam')
 
-const led = require('./lib/led')
+const led = require('./led')
 
 const start = (output) => {
   const camera = new RaspiCam({
