@@ -1,3 +1,4 @@
+const path = require('path')
 const RaspiCam = require('raspicam')
 
 const led = require('./led')
