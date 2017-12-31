@@ -33,6 +33,7 @@ const upload = () => {
       led.stopWorking(working)
       return led.failure()
     }
+	  asdf
     led.stopWorking(working)
     led.ready()
     console.log('uploaded');

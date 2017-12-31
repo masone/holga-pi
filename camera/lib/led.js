@@ -52,4 +52,8 @@ const off = () => {
   led.writeSync(0)
 }
 
+process.on('exit', (code) => {
+	led.unexport()
+})
+
 module.exports = {ready, error, working, stopWorking, failure}
