@@ -4,6 +4,7 @@ const path = require('path')
 const cloudinary = require('cloudinary')
 const _ = require('lodash')
 
+const led = require('./lib/led')
 const output = path.resolve('./tmp/holga.jpg');
 
 const camera = new RaspiCam({
