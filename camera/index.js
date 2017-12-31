@@ -12,15 +12,18 @@ const _ = require('lodash')
 const led = new Gpio(15, 'out')
 
 const ledReady = () => {
-  ledOn()
+  console.log('led ready')
+	ledOn()
 }
 const ledFailure = () => {
+	console.log('led failure')
   const intervals = ledError()
   setTimeout(() => {
     intervals.forEach(interval => clearInterval(interval))
   }, 1200)
 }
 const ledWorking = () => {
+	console.log('led workoing')
   return setInterval(() => {
     ledOff()
     setInterval(() => {
@@ -29,17 +32,19 @@ const ledWorking = () => {
   }, 100)
 }
 const ledStopWorking = (working) => {
+	console.log('led stop working')
   clearInterval(working)
 }
 const ledError = () => {
-  const delay = 500
+	console.log('led error')
+  const delay = 1600
   const intOff = setInterval(() => {
     ledOff()
   }, delay)
   const intOn = setInterval(() => {
     setTimeout(() => {
       ledOn()
-    }, delay)
+    }, delay/2)
   }, delay)
 
   return [intOff, intOn]
@@ -65,7 +70,8 @@ const camera = new RaspiCam({
 });
 
 camera.on('start', () => {
-  ledReady()
+console.log('cam start')
+	ledReady()
 })
 camera.on('read', (err, timestamp, filename) => {
   if (err) {
@@ -80,7 +86,7 @@ camera.on('stop', () => {
 });
 
 camera.on('exit', () => {
-  ledError()
+	ledError()
   console.log('camera exited')
 });
 
@@ -90,7 +96,7 @@ camera.start();
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
   console.log('triggering...')
-  ledSuccess()
+  ledReady()
   upload();
 }, 1500, {leading: true, trailing: false});
 
