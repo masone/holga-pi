@@ -4,61 +4,6 @@ const path = require('path')
 const cloudinary = require('cloudinary')
 const _ = require('lodash')
 
-// ready/ok: solid
-// ok (trigger): off short once
-// working (uploading): rapid blink
-// blocking error: slow blink
-// upload failed: off long twice
-const led = new Gpio(15, 'out')
-
-const ledReady = () => {
-  console.log('led ready')
-	ledOn()
-}
-const ledFailure = () => {
-	console.log('led failure')
-  const intervals = ledError()
-  setTimeout(() => {
-    intervals.forEach(interval => clearInterval(interval))
-  }, 1200)
-}
-const ledWorking = () => {
-	console.log('led workoing')
-  return setInterval(() => {
-    ledOff()
-    setInterval(() => {
-      ledOn()
-    }, 100)
-  }, 100)
-}
-const ledStopWorking = (working) => {
-	console.log('led stop working')
-  clearInterval(working)
-}
-const ledError = () => {
-	console.log('led error')
-  const delay = 1600
-  const intOff = setInterval(() => {
-    ledOff()
-  }, delay)
-  const intOn = setInterval(() => {
-    setTimeout(() => {
-      ledOn()
-    }, delay/2)
-  }, delay)
-
-  return [intOff, intOn]
-}
-
-const ledOn = () => {
-  console.log('led on')
-  led.writeSync(1)
-}
-const ledOff = () => {
-  console.log('led off')
-  led.writeSync(0)
-}
-
 const output = path.resolve('./tmp/holga.jpg');
 
 const camera = new RaspiCam({
@@ -70,11 +15,11 @@ const camera = new RaspiCam({
 
 camera.on('start', () => {
 console.log('cam start')
-	ledReady()
+	led.ready()
 })
 camera.on('read', (err, timestamp, filename) => {
   if (err) {
-    ledError()
+    led.error()
     return console.log('Error', err);
   }
   console.log('snapped', timestamp, filename);
@@ -85,7 +30,7 @@ camera.on('stop', () => {
 });
 
 camera.on('exit', () => {
-	ledError()
+	led.error()
   console.log('camera exited')
 });
 
@@ -95,14 +40,14 @@ camera.start();
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
   console.log('triggering...')
-  ledReady()
+  led.ready()
   upload();
 }, 1500, {leading: true, trailing: false});
 
 console.log('listening...')
 button.watch(function (err, value) {
   if (err) {
-    ledBlockingError()
+    led.error() // todo: blocking error
     return console.log(err);
   }
   trigger();
@@ -110,15 +55,15 @@ button.watch(function (err, value) {
 
 const upload = () => {
   console.log('uploading...');
-  const working = ledWorking()
+  const working = led.working()
   cloudinary.uploader.upload(output, function (result) {
     console.log(result);
     if (result.error) {
-      ledStopWorking(working)
-      return ledFailure()
+      led.stopWorking(working)
+      return led.failure()
     }
-    ledStopWorking(working)
-    ledReady()
+    led.stopWorking(working)
+    led.ready()
     console.log('uploaded');
   });
 };
