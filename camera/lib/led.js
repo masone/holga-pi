@@ -10,7 +10,7 @@ const led = new Gpio(15, 'out')
 
 const ready = () => {
   console.log('led ready')
-  // on()
+  on()
 }
 const failure = () => {
   console.log('led failure')
@@ -49,11 +49,11 @@ const error = () => {
 
 const on = () => {
   console.log('led on')
-  // led.writeSync(1)
+  led.writeSync(1)
 }
 const off = () => {
   console.log('led off')
-  // led.writeSync(0)
+  led.writeSync(0)
 }
 
 module.exports = {ready, error, working, stopWorking, failure}
