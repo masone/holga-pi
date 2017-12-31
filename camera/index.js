@@ -61,7 +61,6 @@ const ledOff = () => {
 
 const output = path.resolve('./tmp/holga.jpg');
 
-//raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0
 const camera = new RaspiCam({
   rotation: 270, contrast: 0, saturation: 0,
   nopreview: true, vstab: false, timeout: 0,
