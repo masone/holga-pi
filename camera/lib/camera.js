@@ -1,7 +1,7 @@
 const path = require('path')
 const RaspiCam = require('raspicam')
 
-const led = require('./lib/led')
+const led = require('./led')
 
 const output = path.resolve('./tmp/holga.jpg');
 

@@ -3,6 +3,7 @@ const cloudinary = require('cloudinary')
 const _ = require('lodash')
 
 const led = require('./lib/led')
+const camera = require('./lib/camera')
 
 camera.start()
 
