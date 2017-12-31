@@ -18,7 +18,7 @@ const trigger = _.debounce(() => {
 console.log('listening...')
 button.watch(function (err, value) {
   if (err) {
-    led.error() 
+    led.error()
     return console.log(err);
   }
   trigger();
@@ -33,7 +33,6 @@ const upload = () => {
       led.stopWorking(working)
       return led.failure()
     }
-	  asdf
     led.stopWorking(working)
     led.ready()
     console.log('uploaded');
