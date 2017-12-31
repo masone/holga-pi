@@ -36,7 +36,8 @@ const upload = () => {
     console.log('uploaded');
   });
 };
-
-process.on('exit', (code) => {
-  button.unexport()
-})
+const disable = () => {
+	        button.unexport()
+}
+process.on('exit', disable)
+process.on('SIGINT', disable)

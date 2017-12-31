@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const path = require('path')
 const RaspiCam = require('raspicam')
 
@@ -6,9 +7,11 @@ const output = path.resolve('./tmp/holga.jpg');
 
 const start = () => {
   const camera = new RaspiCam({
+    log: _.noop,
     rotation: 270, contrast: 0, saturation: 0,
     nopreview: true, vstab: false, timeout: 0,
-    mode: 'timelapse', output, timelapse: 0.5,
+    mode: 'timelapse', output, timelapse: 0.2,
+	  quality: 80, burst: true, ex: 'antishake'
     // width: 1296, height: 972, quality: 80, encoding: 'jpg'
   });
 
