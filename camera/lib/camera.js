@@ -22,7 +22,7 @@ const start = (output) => {
     }
     console.log('snapped', timestamp, filename);
   });
-
+  
   camera.on('stop', () => {
     console.log('camera stopped')
   });
