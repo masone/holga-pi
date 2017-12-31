@@ -4,7 +4,7 @@ const RaspiCam = require('raspicam')
 const led = require('./led')
 const output = path.resolve('./tmp/holga.jpg');
 
-const start = (output) => {
+const start = () => {
   const camera = new RaspiCam({
     rotation: 270, contrast: 0, saturation: 0,
     nopreview: true, vstab: false, timeout: 0,
