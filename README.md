@@ -19,7 +19,8 @@ ssh pi@holgapi.local
 ## How to 
 - Update firmware `sudo rpi-update`
 - Enable the camera `sudo raspi-config`
-- Start camera daemon on server `export CLOUDINARY_URL=cloudinary://... node index.js`
+- Start camera daemon on server `export CLOUDINARY_URL=cloudinary://... sudo -E node index.js`
+- Process needs to be started with sudo because of the led driver
 - Test camera `vcgencmd get_camera`
 - Manual snapshots `raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0`
 - Enable cam on start `/boot/config.txt` `start_x=1 gpu_mem=128`
@@ -27,5 +28,4 @@ ssh pi@holgapi.local
 
 
 ## TODO
-
 - try onoff debounce https://github.com/fivdi/onoff/blob/abb73e57dcf348899b299f0daec861cac5afad43/onoff.js#L51

@@ -1,15 +1,21 @@
+// GPIO 4: yellow
+// 3.3v: brown
+// GND: black
+
 const path = require('path')
 const Gpio = require('onoff').Gpio
 const cloudinary = require('cloudinary')
 const _ = require('lodash')
 
 const led = require('./led')
+const flash = require('./flash')
 
 const output = path.resolve('./tmp/holga.jpg');
 
 const button = new Gpio(4, 'in', 'rising', {activeLow: true});
 const trigger = _.debounce(() => {
   console.log('triggering...')
+  flash.trigger()
   upload();
 }, 1500, {leading: true, trailing: false});
 

@@ -1,3 +1,6 @@
+ // GPIO 15: violet
+ // GND: white
+
 const Gpio = require('onoff').Gpio
 const _ = require('lodash')
 
