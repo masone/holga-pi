@@ -1,5 +1,5 @@
- // GPIO 15: violet
- // GND: white
+// GPIO 15: violet
+// GND: white
 
 const Gpio = require('onoff').Gpio
 const _ = require('lodash')
@@ -16,21 +16,20 @@ const ready = () => {
 const failure = () => {
   const intervals = error()
   setTimeout(() => {
-     intervals.forEach(interval => clearInterval(interval))
+    intervals.forEach(interval => clearInterval(interval))
   }, 5000)
 }
 const working = () => {
   const delay = 100
   const intOff = setInterval(() => {
-    off()  
+    off()
   }, delay)
   const intOn = setInterval(() => {
     setTimeout(() => {
       on()
-    }, delay/2)
-
+    }, delay / 2)
   }, delay)
-  return [intOff, intOn]	
+  return [intOff, intOn]
 }
 const stopWorking = (intervals) => {
   intervals.forEach(interval => clearInterval(interval))
@@ -43,7 +42,7 @@ const error = () => {
   const intOn = setInterval(() => {
     setTimeout(() => {
       on()
-    }, delay/2)
+    }, delay / 2)
   }, delay)
   return [intOff, intOn]
 }
@@ -56,7 +55,7 @@ const off = () => {
 }
 
 process.on('exit', (code) => {
-	led.unexport()
+  led.unexport()
 })
 
 module.exports = {ready, error, working, stopWorking, failure}

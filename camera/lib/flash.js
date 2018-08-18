@@ -17,14 +17,14 @@ const off = () => {
   flash.setBrightness(0x000000)
 }
 
-const trigger = (time=1000) => {
+const trigger = (time = 1000) => {
   on()
   setTimeout(off, time)
 }
 
 off()
 
-process.on("exit", function(){
+process.on('exit', function () {
   flash.reset()
 })
 
