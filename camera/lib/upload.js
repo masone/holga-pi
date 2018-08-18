@@ -1,38 +1,12 @@
-// GPIO 4: yellow
-// 3.3v: brown
-// GND: black
-
-const path = require('path')
-const Gpio = require('onoff').Gpio
 const cloudinary = require('cloudinary')
-const _ = require('lodash')
 
 const led = require('./led')
-const flash = require('./flash')
 
-const output = path.resolve('./tmp/holga.jpg');
-
-const button = new Gpio(4, 'in', 'rising', {activeLow: true});
-const trigger = _.debounce(() => {
-  console.log('triggering...')
-  flash.trigger()
-  upload();
-}, 1500, {leading: true, trailing: false});
-
-console.log('listening...')
-button.watch(function (err, value) {
-  if (err) {
-    led.error()
-    return console.log(err);
-  }
-  trigger();
-});
-
-const upload = () => {
+const trigger = (output) => {
   console.log('uploading...');
   const working = led.working()
   cloudinary.uploader.upload(output, function (result) {
-    //console.log(result)
+    if (process.env.DEBUG) console.log(result)
     if (result.error) {
       led.stopWorking(working)
       return led.failure()
@@ -46,3 +20,5 @@ const upload = () => {
 process.on('exit', (code) => {
   button.unexport()
 })
+
+module.exports = {trigger}

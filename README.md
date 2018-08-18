@@ -25,7 +25,3 @@ ssh pi@holgapi.local
 - Manual snapshots `raspistill --timelapse 1 -o tmp/img_%04d.jpg --latest tmp/img_latest.jpg --timeout 0`
 - Enable cam on start `/boot/config.txt` `start_x=1 gpu_mem=128`
 - Automatically start camera process `crontab -e`
-
-
-## TODO
-- try onoff debounce https://github.com/fivdi/onoff/blob/abb73e57dcf348899b299f0daec861cac5afad43/onoff.js#L51
