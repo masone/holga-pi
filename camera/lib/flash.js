@@ -28,4 +28,4 @@ process.on('exit', function () {
   flash.reset()
 })
 
-module.exports = {trigger}
+module.exports = {trigger, off}
