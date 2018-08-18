@@ -1,22 +1,24 @@
 // GPIO 15: violet
 // GND: white
 
-const Gpio = require('onoff').Gpio
-const _ = require('lodash')
-
 // ready/ok: solid
 // working/uploading: rapid blink
 // blocking error: slow blink
 // failure: slow blink 2-3 times
+
+const Gpio = require('onoff').Gpio
+
 const led = new Gpio(15, 'low', {activeLow: true})
+let activeIntervals = []
+let activeTimeouts = []
 
 const ready = () => {
   on()
 }
 const failure = () => {
-  const intervals = error()
+  error()
   setTimeout(() => {
-    intervals.forEach(interval => clearInterval(interval))
+    stopBlinking()
   }, 5000)
 }
 const working = () => {
@@ -29,10 +31,15 @@ const working = () => {
       on()
     }, delay / 2)
   }, delay)
-  return [intOff, intOn]
+
+  activeIntervals.push(intOff)
+  activeIntervals.push(intOn)
 }
-const stopWorking = (intervals) => {
-  intervals.forEach(interval => clearInterval(interval))
+const stopBlinking = () => {
+  activeIntervals.forEach(interval => clearInterval(interval))
+  activeIntervals = []
+  activeTimeouts.forEach(timeout => clearTimeout(timeout))
+  activeTimeouts = []
 }
 const error = () => {
   const delay = 1400
@@ -40,11 +47,15 @@ const error = () => {
     off()
   }, delay)
   const intOn = setInterval(() => {
-    setTimeout(() => {
+    const intOnOff = setTimeout(() => {
       on()
     }, delay / 2)
+
+    activeTimeouts.push(intOnOff)
   }, delay)
-  return [intOff, intOn]
+
+  activeIntervals.push(intOn)
+  activeIntervals.push(intOff)
 }
 
 const on = () => {
@@ -58,4 +69,4 @@ process.on('exit', (code) => {
   led.unexport()
 })
 
-module.exports = {ready, error, working, stopWorking, failure}
+module.exports = {ready, error, working, stopBlinking, failure}

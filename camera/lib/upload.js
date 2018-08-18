@@ -4,14 +4,14 @@ const led = require('./led')
 
 const trigger = (output) => {
   console.log('uploading...')
-  const working = led.working()
+  led.working()
   cloudinary.uploader.upload(output, function (result) {
     if (process.env.DEBUG) console.log(result)
     if (result.error) {
-      led.stopWorking(working)
+      led.stopBlinking()
       return led.failure()
     }
-    led.stopWorking(working)
+    led.stopBlinking()
     led.ready()
     console.log('uploaded')
   })
