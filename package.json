@@ -3,19 +3,20 @@
   "version": "1.0.0",
   "description": "- Gpio layout https://pinout.xyz - Library for the switch https://www.npmjs.com/package/onoff - Library for the camera https://github.com/troyth/node-raspicam - Image upload / storage https://cloudinary.com/documentation/image_upload_api_reference - Image api https://cloudinary.com/documentation/admin_api#browse_resources - Image filters https://cloudinary.com/documentation/image_transformations",
   "main": "index.js",
-  "dependencies": {
-    "eslint": "^4.9.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "eslint": "^4.9.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint": "^5.4.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "prettier": "^1.14.2"
   },
   "scripts": {
-    "lint": "eslint **/*.js --fix",
+    "format": "eslint **/*.js --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

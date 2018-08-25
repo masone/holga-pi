@@ -1,6 +1,7 @@
 const express = require('express')
-const app = express()
 const cloudinary = require('cloudinary')
+
+const app = express()
 const port = process.env.PORT || 5000
 const filter = 'red_rock' // audrey, ukulele, quartz
 
@@ -18,5 +19,5 @@ app.listen(port, function () {
 })
 
 const generateUrl = (resource) => {
-  return `http://res.cloudinary.com/dzushlk1c/image/upload/c_crop,e_art:${filter},g_center,h_1944,w_1944/v${resource.version}/${resource.public_id}.jpg`
+  return `http://res.cloudinary.com/lw-gmaps/image/upload/c_crop,e_art:${filter},g_center,h_1944,w_1944/v${resource.version}/${resource.public_id}.jpg`
 }
