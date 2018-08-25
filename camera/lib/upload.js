@@ -14,11 +14,13 @@ const trigger = (output) => {
     led.stopBlinking()
     led.ready()
     console.log('uploaded')
-  })
-}
+  });
+};
 
-process.on('exit', (code) => {
+const disable = () => {
   button.unexport()
-})
+}
+process.on('exit', disable)
+process.on('SIGINT', disable)
 
 module.exports = {trigger}

@@ -64,9 +64,10 @@ const on = () => {
 const off = () => {
   led.writeSync(0)
 }
-
-process.on('exit', (code) => {
+const disable = () => {
   led.unexport()
-})
+}
+process.on('exit', disable)
+process.on('SIGINT', disable)
 
 module.exports = {ready, error, working, stopBlinking, failure}

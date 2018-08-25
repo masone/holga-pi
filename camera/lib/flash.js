@@ -24,8 +24,11 @@ const trigger = (time = 1000) => {
 
 off()
 
-process.on('exit', function () {
+const disable = () => {
   flash.reset()
-})
+}
+
+process.on('exit', disable)
+process.on('SIGINT', disable)
 
 module.exports = {trigger, off}

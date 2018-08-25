@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const path = require('path')
 const RaspiCam = require('raspicam')
 
@@ -13,6 +14,7 @@ const camera = new RaspiCam({
   vstab: false, // video stabilization
   timeout: 1,
   mode: 'photo',
+  ex: 'antishake',
   output // width: 1296, height: 972, quality: 80, encoding: 'jpg'
 })
 
