@@ -21,6 +21,7 @@
     "lodash": "^4.17.4",
     "onoff": "^1.1.8",
     "pi-gpio": "0.0.8",
-    "raspicam": "^0.2.14"
+    "raspicam": "^0.2.14",
+    "rpi-ws281x-native": "^0.9.0"
   }
 }
