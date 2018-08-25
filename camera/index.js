@@ -23,6 +23,6 @@ button.watch(function (err, value) {
   trigger()
 })
 
-flash.stop()
+flash.off()
 led.ready()
 console.log('initialized...')
