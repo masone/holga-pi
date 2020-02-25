@@ -7,3 +7,6 @@ else
   printf 'Starting WiFi Connect\n'
   wifi-connect --portal-ssid=HolgaPi
 fi
+
+cd $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+sudo -E node ../index.js
