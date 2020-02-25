@@ -1,3 +1,4 @@
 tmp
 camera/tmp/*
-node_modules
+camera/node_modules
+ui/node_modules
