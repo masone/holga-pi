@@ -1,0 +1,16 @@
+[Unit]
+Description=Holga Pi
+After=NetworkManager.service
+
+[Service]
+Type=simple
+ExecStart=/home/pi/holga-pi/camera/bin/start.sh
+Restart=on-failure
+StandardOutput=syslog
+SyslogIdentifier=holga-pi
+Type=idle
+User=root
+Environment="CLOUDINARY_URL=cloudinary://your-cloudinary-url"
+
+[Install]
+WantedBy=multi-user.target
