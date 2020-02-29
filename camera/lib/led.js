@@ -65,6 +65,7 @@ const off = () => {
   led.writeSync(0)
 }
 const disable = () => {
+  off()
   led.unexport()
 }
 process.on('exit', disable)
