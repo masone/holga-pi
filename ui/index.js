@@ -1,11 +1,18 @@
 const express = require('express')
+const basicAuth = require('express-basic-auth')
 const cloudinary = require('cloudinary')
 
 const app = express()
 const port = process.env.PORT || 5000
 const filter = 'red_rock' // audrey, ukulele, quartz
 
-app.get('/', function (req, res) {
+if(process.env.AUTH_PASSWORD){
+  app.use(basicAuth({
+    users: { "holgapi": process.env.AUTH_PASSWORD }
+  }))
+}
+
+app.get('/', function (_req, res) {
   cloudinary.v2.api.resources({resource_type: 'image', max_results: 1, direction: 'desc'}, (err, result) => {
     if (err) return console.log(err)
     const urls = result.resources.map((resource) => generateUrl(resource))
@@ -15,7 +22,7 @@ app.get('/', function (req, res) {
 })
 
 app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`)
+  console.log(`Started on http://localhost:${port}`)
 })
 
 const generateUrl = (resource) => {
