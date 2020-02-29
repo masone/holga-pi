@@ -1,14 +1,40 @@
 # Digital Holga
 
-The `holga-pi` is a raspberry pi based digital holga. It snaps pictures and uploads them to cloudinary.
+The `holga-pi` is a raspberry pi based digital holga. It snaps pictures and uploads them via wifi. Also includes a simple webapp to display images in realtime.
 
-Image transformations and art filters are available through their api. Here's a demo: https://holga-pi.herokuapp.com/
+![](holga-pi.jpg?raw=true)
+
+## Hardware
+
+### Parts
+- [Raspberry Pi Camera Board v2](https://www.adafruit.com/product/3099)
+- [Raspberry Pi Zero](https://www.adafruit.com/product/3400)
+- [Raspberry Pi Zero v1.3 Camera Cable](https://www.adafruit.com/product/3157)
+- [Pisugar battery pack](https://hackaday.io/project/164733-pisugar-battery-for-raspberry-pi-zero)
+- MicroSDHC card, some cables, a LED
+- [Flash-Bang SW602](https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20200229014252&SearchText=Flash-Bang+SW602)
+
+### Wiring
+
+I connected the pi to the original camera shutter, which works fine. My LED is placed in the viewfinder. The flash is mounted in the original position and wired up to the light sensitivity switch above the lens. The flash is powered by a separate battery to not drain the one of the pi.
+
+- Camera shutter
+  - Pin 7 - GPIO https://pinout.xyz/pinout/pin7_gpio4#
+  - Pin 1 - 3.3v https://pinout.xyz/pinout/pin1_3v3_power#
+  - Ground https://pinout.xyz/pinout/ground#
+- Status LED
+  - Pin 17 - 3.3v https://pinout.xyz/pinout/pin17_3v3_power#
+  - Pin 10 - https://pinout.xyz/pinout/pin10_gpio15#
+- Flash
+  - Pin 12 - PWM https://pinout.xyz/pinout/pin12_gpio18#
+  - 5v / Ground
+
+For inspiration, check the `images` folder.
 
 ## Setup
 
 ### Raspberry Pi
-I run on a Raspberry pi zero with a [Pisugar battery pack](https://hackaday.io/project/164733-pisugar-battery-for-raspberry-pi-zero).
-
+- Install Raspbian (stretch)
 - Install node on pi zero with https://github.com/sdesalas/node-pi-zero
 - Enable ssh https://www.raspberrypi.org/documentation/remote-access/ssh/
 - Upload public key `ssh-copy-id pi@raspberrypi.local`
@@ -27,7 +53,7 @@ sudo npm install --unsafe-perm epoll
 
 To start the process manually:
 ```
-CLOUDINARY_URL=cloudinary://... sudo node index.js
+CLOUDINARY_URL=cloudinary://... sudo -E node index.js
 ```
 
 Logs can be found in `tail -f ~/holga-pi.log`
@@ -45,15 +71,30 @@ sudo systemctl enable /etc/systemd/system/holga-pi.service
 
 The gpio library and wifi-connect require you to run the process with `root`.
 
+### Webapp
+The camera uploads images to cloudinary, which can be displayed on the web.
+
+```
+git clone https://github.com/masone/holga-pi.git
+cd ~/holga-pi/ui
+npm install
+node index.js
+```
+
+For available image filters, see https://cloudinary.com/documentation/image_transformations
+
+## LED Behavior
+- Solid: Ready
+- Fast blink: Processing or uploading a snapshoat
+- Slow blink: Snapping or uploading failed
+
 ## Notes to self
 - Library for the switch https://www.npmjs.com/package/onoff
 - Library for the camera https://github.com/troyth/node-raspicam
 - Image upload / storage https://cloudinary.com/documentation/image_upload_api_reference
 - Image api https://cloudinary.com/documentation/admin_api#browse_resources
-- Image filters https://cloudinary.com/documentation/image_transformations
 - Update firmware `sudo rpi-update`
 - Update raspbian: `sudo apt-get update` `sudo apt-get dist-upgrade`
-- Gpio layout (onoff uses BCM pin numbers) https://pinout.xyz
 - Test camera with `vcgencmd get_camera`
 - Troubleshooting camera module https://elinux.org/Rpi_Camera_Module#Troubleshooting
 - Save power https://monkeyinmysoup.gitbooks.io/raspberry-pi/content/5.1-power-consumption.html, underclock `sudo vim /boot/config.txt`: `arm_freq`, disable HDMI `/usr/bin/tvservice -o`
