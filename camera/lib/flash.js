@@ -1,20 +1,21 @@
 // GPIO 12: green
 // GND: 14
 
-var flash = require('rpi-ws281x-native')
+const flash = require('rpi-ws281x-native')
 
-var numLeds = 12
+const numLeds = 12
+const leds = new Uint32Array(numLeds)
+leds.fill(0xffffff)
 flash.init(numLeds)
 
-var leds = new Uint32Array(numLeds)
-leds.fill(0xffffff)
-
 const on = () => {
-  flash.render(leds)
   flash.setBrightness(0xffffff)
+  flash.render(leds)
 }
+
 const off = () => {
   flash.setBrightness(0x000000)
+  flash.render(leds)
 }
 
 const trigger = (time = 1000) => {
@@ -22,9 +23,8 @@ const trigger = (time = 1000) => {
   setTimeout(off, time)
 }
 
-off()
-
 const disable = () => {
+  off()
   flash.reset()
 }
 
