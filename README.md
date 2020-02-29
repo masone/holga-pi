@@ -6,7 +6,7 @@ The `holga-pi` is a raspberry pi based digital holga. It snaps pictures and uplo
 
 ## Hardware
 
-### Parts
+### Parts
 - [Raspberry Pi Camera Board v2](https://www.adafruit.com/product/3099)
 - [Raspberry Pi Zero](https://www.adafruit.com/product/3400)
 - [Raspberry Pi Zero v1.3 Camera Cable](https://www.adafruit.com/product/3157)
@@ -33,7 +33,7 @@ For inspiration, check the `images` folder.
 
 ## Setup
 
-### Raspberry Pi
+### Raspberry Pi
 - Install Raspbian (stretch)
 - Install node on pi zero with https://github.com/sdesalas/node-pi-zero
 - Enable ssh https://www.raspberrypi.org/documentation/remote-access/ssh/
@@ -60,7 +60,7 @@ Logs can be found in `tail -f ~/holga-pi.log`
 
 The gpio library requires you to run the process with `sudo` rights.
 
-### Start on reboot
+### Start on reboot
 Install https://github.com/resin-io/resin-wifi-connect to create a hotspot creation when network is unavailable. Once the pi has wifi, it will start the camera.
 
 Firstly, configure your `CLOUDINARY_URL` in `holga-pi.service`, then:
